@@ -5,6 +5,24 @@ interface StateMatcher {
     describe(): string;
 }
 
+class AndPredicate implements StateMatcher {
+    private readonly left: StateMatcher;
+    private readonly right: StateMatcher;
+
+    constructor(left: StateMatcher, right: StateMatcher) {
+        this.left = left;
+        this.right = right;
+    }
+
+    describe(): string {
+        return `And(${this.left.describe()}, ${this.right.describe()})`;
+    }
+
+    match(state: GameState): boolean {
+        return this.left.match(state) && this.right.match(state);
+    }
+}
+
 class OrPredicate implements StateMatcher {
     private readonly left: StateMatcher;
     private readonly right: StateMatcher;
@@ -74,4 +92,32 @@ class IsInStorylet implements StateMatcher {
     }
 }
 
-export {IsInArea, IsInSetting, IsInStorylet, OrPredicate, StateMatcher};
+class NoStorylet implements StateMatcher {
+
+    constructor() {
+    }
+
+    describe(): string {
+        return `NoStorylet`;
+    }
+
+    match(state: GameState): boolean {
+        return state.storyletPhase == StoryletPhases.Unknown || state.storyletPhase == StoryletPhases.Available;
+    }
+}
+
+class IsInAnyStorylet implements StateMatcher {
+
+    constructor() {
+    }
+
+    describe(): string {
+        return `InAnyStorylet()`;
+    }
+
+    match(state: GameState): boolean {
+        return state.storyletPhase == StoryletPhases.In;
+    }
+}
+
+export {IsInArea, IsInSetting, IsInStorylet, NoStorylet, IsInAnyStorylet, AndPredicate, OrPredicate, StateMatcher};

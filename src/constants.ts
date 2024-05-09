@@ -129,6 +129,10 @@ const SETTINGS_SCHEMA: SettingsSchema = [
                 description: "Remove text about challenge being simple from check results.",
                 default: true,
             },
+            top_bar_qualities: {
+                description: "Show context-dependent qualities above branches.",
+                default: true,
+           },
         },
     },
     {

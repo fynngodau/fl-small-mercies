@@ -28,6 +28,7 @@ import {DiscordanceChecksFixer} from "./discordance_checks";
 import {EchoPenniesFixer} from "./echo_pennies";
 import {BranchResultsFixer} from "./branch_results";
 import {SidebarArtFixer} from "./sidebar_art";
+import {TopQualities} from "./top_qualities";
 
 export default [
     AutoScrollFixer,
@@ -59,4 +60,5 @@ export default [
     EchoPenniesFixer,
     BranchResultsFixer,
     SidebarArtFixer,
+    TopQualities,
 ];
