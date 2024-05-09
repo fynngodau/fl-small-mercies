@@ -30,10 +30,9 @@ const DOUBT_STREET_PREDICATE = new AndPredicate(new IsInArea(47), new OrPredicat
 const NAGA_ADVERTISING_PREDICATE = new AndPredicate(new IsInArea(111202), new OrPredicate(new IsInAnyStorylet(), new NoStorylet()));
 const BOARD_ROOM_PREDICATE = new OrPredicate(
 	new IsInStorylet(329558), // Into the Boardroom
-	new OrPredicate(
 	new IsInStorylet(329421), // Explore adding to the Board
 	new IsInStorylet(327095), // Convene a Board Meeting of the Great Hellbound Railway
-));
+);
 const FORGOTTEN_QUARTER_EXPEDITION_SUPPLY_PREDICATE = new OrPredicate(
 	new IsInStorylet(108662), // Prepare for an Expedition
 	new IsInStorylet(109228) // Begin an Expedition redirect ("Be prepared")
