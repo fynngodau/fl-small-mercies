@@ -40,6 +40,8 @@ const FORGOTTEN_QUARTER_EXPEDITION_SUPPLY_PREDICATE = new OrPredicate(
 const WAKEFUL_EYE_PREDICATE = new OrPredicate(
     new IsInStorylet(285304), // Offering Tribute to the Court of the Wakeful Eye
 );
+const CABINET_NOIR_FRONT_ROOM = new IsInStorylet(334177); // Work in your Cabinet Noir
+const CABINET_NOIR_BACK_ROOM = new IsInStorylet(334201); // Your Cabinet Noir: The Back Room
 
 
 const QUALTS = [
@@ -54,6 +56,12 @@ const QUALTS = [
     new TopQuality("In Corporate Debt", "Story", "coingold", true, BOARD_ROOM_PREDICATE),
     new TopQuality("Crate of Expedition Supplies", "Goods", "toolbox", true, FORGOTTEN_QUARTER_EXPEDITION_SUPPLY_PREDICATE, 100, "Supplies"),
     new TopQuality("Tribute", "Story", "tigerstripes", true, WAKEFUL_EYE_PREDICATE, 260),
+    new TopQuality("Disappearing...", "Progress", "secret", false, CABINET_NOIR_FRONT_ROOM, 10),
+    new TopQuality("Cover Identity: Elaboration", "Story", "mask", true, CABINET_NOIR_BACK_ROOM, 10, "Elaboration"),
+    new TopQuality("Cover Identity: Nuance", "Story", "ridiculoushat", true, CABINET_NOIR_BACK_ROOM, 6, "Nuance"),
+    new TopQuality("Cover Identity: Witnesses", "Story", "whispered_secret", true, CABINET_NOIR_BACK_ROOM, 6, "Witnesses"),
+    new TopQuality("Cover Identity: Credentials", "Story", "envelope", true, CABINET_NOIR_BACK_ROOM, 6, "Credentials"),
+    new TopQuality("Cover Identity: Backstory", "Story", "maskpurple", true, CABINET_NOIR_BACK_ROOM, undefined, "Backstory"),
 ]
 
 export class TopQualities implements IMutationAware, IStateAware {
