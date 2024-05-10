@@ -29,27 +29,31 @@ const UNDERCLAY_PREDICATE = new OrPredicate(new IsInStorylet(343156), new OrPred
 const DOUBT_STREET_PREDICATE = new AndPredicate(new IsInArea(47), new OrPredicate(new IsInAnyStorylet(), new NoStorylet()));
 const NAGA_ADVERTISING_PREDICATE = new AndPredicate(new IsInArea(111202), new OrPredicate(new IsInAnyStorylet(), new NoStorylet()));
 const BOARD_ROOM_PREDICATE = new OrPredicate(
-	new IsInStorylet(329558), // Into the Boardroom
-	new IsInStorylet(329421), // Explore adding to the Board
-	new IsInStorylet(327095), // Convene a Board Meeting of the Great Hellbound Railway
+    new IsInStorylet(329558), // Into the Boardroom
+    new IsInStorylet(329421), // Explore adding to the Board
+    new IsInStorylet(327095), // Convene a Board Meeting of the Great Hellbound Railway
 );
 const FORGOTTEN_QUARTER_EXPEDITION_SUPPLY_PREDICATE = new OrPredicate(
-	new IsInStorylet(108662), // Prepare for an Expedition
-	new IsInStorylet(109228) // Begin an Expedition redirect ("Be prepared")
-)
+    new IsInStorylet(108662), // Prepare for an Expedition
+    new IsInStorylet(109228) // Begin an Expedition redirect ("Be prepared")
+);
+const WAKEFUL_EYE_PREDICATE = new OrPredicate(
+    new IsInStorylet(285304), // Offering Tribute to the Court of the Wakeful Eye
+);
 
 
 const QUALTS = [
-	new TopQuality("Ealing Gardens Commercial Development", "Story", "coin", true, new OrPredicate(new IsInStorylet(336171), new IsInStorylet(322179)), 3),
-	new TopQuality("Stone Confessions", "Progress", "cavelake", true, UNDERCLAY_PREDICATE, 600),
-	new TopQuality("Convincing Falsehoods", "Progress", "arm", true, UNDERCLAY_PREDICATE, 600),
-	new TopQuality("Hour before the Deadline", "Progress", "clock", false, DOUBT_STREET_PREDICATE),
-	new TopQuality("Meritorious Copy", "Curiosity", "newspaper", true, DOUBT_STREET_PREDICATE, 104),
-	new TopQuality("Salacious Copy", "Curiosity", "newspaper", true, DOUBT_STREET_PREDICATE, 104),
-	new TopQuality("Outlandish Copy", "Curiosity", "newspaper", true, DOUBT_STREET_PREDICATE, 104),
-	//new TopQuality("Prolific Advertiser", "Story", "storyextraordinary", false, NAGA_ADVERTISING_PREDICATE),
-	new TopQuality("In Corporate Debt", "Story", "coingold", true, BOARD_ROOM_PREDICATE),
-	new TopQuality("Crate of Expedition Supplies", "Goods", "toolbox", true, FORGOTTEN_QUARTER_EXPEDITION_SUPPLY_PREDICATE, 100, "Supplies"), 
+    new TopQuality("Ealing Gardens Commercial Development", "Story", "coin", true, new OrPredicate(new IsInStorylet(336171), new IsInStorylet(322179)), 3),
+    new TopQuality("Stone Confessions", "Progress", "cavelake", true, UNDERCLAY_PREDICATE, 600),
+    new TopQuality("Convincing Falsehoods", "Progress", "arm", true, UNDERCLAY_PREDICATE, 600),
+    new TopQuality("Hour before the Deadline", "Progress", "clock", false, DOUBT_STREET_PREDICATE),
+    new TopQuality("Meritorious Copy", "Curiosity", "newspaper", true, DOUBT_STREET_PREDICATE, 104),
+    new TopQuality("Salacious Copy", "Curiosity", "newspaper", true, DOUBT_STREET_PREDICATE, 104),
+    new TopQuality("Outlandish Copy", "Curiosity", "newspaper", true, DOUBT_STREET_PREDICATE, 104),
+    //new TopQuality("Prolific Advertiser", "Story", "storyextraordinary", false, NAGA_ADVERTISING_PREDICATE),
+    new TopQuality("In Corporate Debt", "Story", "coingold", true, BOARD_ROOM_PREDICATE),
+    new TopQuality("Crate of Expedition Supplies", "Goods", "toolbox", true, FORGOTTEN_QUARTER_EXPEDITION_SUPPLY_PREDICATE, 100, "Supplies"),
+    new TopQuality("Tribute", "Story", "tigerstripes", true, WAKEFUL_EYE_PREDICATE, 260),
 ]
 
 export class TopQualities implements IMutationAware, IStateAware {
@@ -87,10 +91,10 @@ export class TopQualities implements IMutationAware, IStateAware {
 
         controller.onLocationChanged((state, _location) => {
             if (this.showTopQualities) {
-            	this.state = state;
+                this.state = state;
                 //this.checkVisibilityPredicates(state);
                 if ("id" in state.currentStorylet) {
-                	console.log(state.currentStorylet.id);
+                    console.log(state.currentStorylet.id);
                 } else {
                     console.log("No storylet");
                 }
@@ -99,12 +103,16 @@ export class TopQualities implements IMutationAware, IStateAware {
 
         controller.onStoryletChanged((state) => {
             if (this.showTopQualities) {
-            	this.state = state;
+                this.state = state;
                 //this.checkVisibilityPredicates(state);
                 if ("id" in state.currentStorylet) {
-                	console.log(state.currentStorylet.id);
+                    console.log(state.currentStorylet.id);
                 } else {
                     console.log("No storylet");
+                }
+                const main = document.getElementById("main");
+                if (main) {
+                    this.onNodeAdded(main);
                 }
             }
         });
@@ -174,16 +182,16 @@ export class TopQualities implements IMutationAware, IStateAware {
         } else {
             span3.textContent = ` ${value} / ${cap}`;
             const div5 = document.createElement("div");
-      	    div5.classList.add("progress-bar");
+            div5.classList.add("progress-bar");
 
-		    const span4 = document.createElement("span");
-		    span4.classList.add("progress-bar__stripe", "progress-bar__stripe--has-transition");
-		    const percentage = (value / cap) * 100;
-		    span4.style.cssText = `width: ${percentage}%;`;
+            const span4 = document.createElement("span");
+            span4.classList.add("progress-bar__stripe", "progress-bar__stripe--has-transition");
+            const percentage = (value / cap) * 100;
+            span4.style.cssText = `width: ${percentage}%;`;
 
-		    div3.appendChild(div5);
+            div3.appendChild(div5);
 
-		    div5.appendChild(span4);
+            div5.appendChild(span4);
         }
 
         return li;
@@ -206,11 +214,11 @@ export class TopQualities implements IMutationAware, IStateAware {
             return true;
         }
 
-		if (node.getElementsByClassName("cards").length > 0) {
+        if (node.getElementsByClassName("cards").length > 0) {
             return true;
         }
 
-		if (node.getElementsByClassName("storylet").length > 0) {
+        if (node.getElementsByClassName("storylet").length > 0) {
             return true;
         }
 
@@ -226,11 +234,11 @@ export class TopQualities implements IMutationAware, IStateAware {
         let qualitiesPanel = document.getElementById("top-qualities");
         // Destroy old qualities display and create a current one.
         if (qualitiesPanel) {
-			const parent = qualitiesPanel.parentElement;
-			if (parent) {
-				parent.removeChild(qualitiesPanel);
-			}
-    	}
+            const parent = qualitiesPanel.parentElement;
+            if (parent) {
+                parent.removeChild(qualitiesPanel);
+            }
+        }
         
         /*const favoursHeader = document.createElement("p");
         favoursHeader.classList.add("heading", "heading--4");
@@ -241,45 +249,45 @@ export class TopQualities implements IMutationAware, IStateAware {
         qualitiesPanel.classList.add("items", "items--list");
         qualitiesPanel.style.cssText = "margin-top: 15px; width: 100%;";
 
-		// Create eligible qualities
+        // Create eligible qualities
         for (const quality of QUALTS) {
-        	if (this.state && quality.predicate.match(this.state)) {
-		        const qualityDisplay = this.createQuality(quality, this.qualityValues.get(quality.name) || 0);
-		        qualitiesPanel.appendChild(qualityDisplay);
+            if (this.state && quality.predicate.match(this.state)) {
+                const qualityDisplay = this.createQuality(quality, this.qualityValues.get(quality.name) || 0);
+                qualitiesPanel.appendChild(qualityDisplay);
             }
         }
         
         if (qualitiesPanel.children.length) {
-		    // Insert inside media-root (storylet top text), if present, or after cards and fifth city storylets, if there are any
-		    const cards = getSingletonByClassName(main, "cards");
-		    const storyletBox = getSingletonByClassName(main, "media--root");
-		    const firstStorylet = getSingletonByClassName(main, "storylet");
-		    const fifthCityStorylets = getSingletonByClassName(main, "disclosure-wrapper");
-		    
-		    if (storyletBox) {
-		        const qualitiesContainer = document.createElement("div");
-		        qualitiesContainer.style.cssText= "width: 100%;";
-		        qualitiesContainer.setAttribute("id", "top-qualities");
-				
-				const divider = document.createElement("hr");
-				divider.style.cssText = "margin-top: 7px; margin-bottom: 7px; border-bottom: 0px; border-top: 1px solid #bdb29e"; // 15px space total
-				qualitiesContainer.appendChild(divider);        	
-		        qualitiesContainer.appendChild(qualitiesPanel);
+            // Insert inside media-root (storylet top text), if present, or after cards and fifth city storylets, if there are any
+            const cards = getSingletonByClassName(main, "cards");
+            const storyletBox = getSingletonByClassName(main, "media--root");
+            const firstStorylet = getSingletonByClassName(main, "storylet");
+            const fifthCityStorylets = getSingletonByClassName(main, "disclosure-wrapper");
+            
+            if (storyletBox) {
+                const qualitiesContainer = document.createElement("div");
+                qualitiesContainer.style.cssText= "width: 100%;";
+                qualitiesContainer.setAttribute("id", "top-qualities");
 
-				storyletBox.appendChild(qualitiesContainer);
-			} else if (fifthCityStorylets) {
-				qualitiesPanel.style.cssText = "margin-top: 15px;";
-				qualitiesPanel.setAttribute("id", "top-qualities");
-		        border.insertBefore(qualitiesPanel, fifthCityStorylets.nextSibling);
-		    } else if (cards) {
-				qualitiesPanel.style.cssText = "margin-top: 15px;";
-				qualitiesPanel.setAttribute("id", "top-qualities");
-		        border.insertBefore(qualitiesPanel, cards.nextSibling);
-		    } else if (firstStorylet) {
-		        qualitiesPanel.style.cssText = "margin-top: 15px;";
-		        qualitiesPanel.setAttribute("id", "top-qualities");
-		        border.insertBefore(qualitiesPanel, border.firstChild);
-		    }
+                const divider = document.createElement("hr");
+                divider.style.cssText = "margin-top: 7px; margin-bottom: 7px; border-bottom: 0px; border-top: 1px solid #bdb29e"; // 15px space total
+                qualitiesContainer.appendChild(divider);
+                qualitiesContainer.appendChild(qualitiesPanel);
+
+                storyletBox.appendChild(qualitiesContainer);
+            } else if (fifthCityStorylets) {
+                qualitiesPanel.style.cssText = "margin-top: 15px;";
+                qualitiesPanel.setAttribute("id", "top-qualities");
+                border.insertBefore(qualitiesPanel, fifthCityStorylets.nextSibling);
+            } else if (cards) {
+                qualitiesPanel.style.cssText = "margin-top: 15px;";
+                qualitiesPanel.setAttribute("id", "top-qualities");
+                border.insertBefore(qualitiesPanel, cards.nextSibling);
+            } else if (firstStorylet) {
+                qualitiesPanel.style.cssText = "margin-top: 15px;";
+                qualitiesPanel.setAttribute("id", "top-qualities");
+                border.insertBefore(qualitiesPanel, border.firstChild);
+            }
         }
     }
 
