@@ -43,6 +43,11 @@ const WAKEFUL_EYE_PREDICATE = new OrPredicate(
 const CABINET_NOIR_FRONT_ROOM = new IsInStorylet(334177); // Work in your Cabinet Noir
 const CABINET_NOIR_BACK_ROOM = new IsInStorylet(334201); // Your Cabinet Noir: The Back Room
 
+const SUNKEN_EMBASSY = new OrPredicate(
+    new IsInStorylet(342081), // Spelunking in the Sunken Embassy
+    new IsInStorylet(342082), // Above, Below
+    new IsInStorylet(342095), // The Sunken Spoils
+);
 
 const QUALTS = [
     new TopQuality("Ealing Gardens Commercial Development", "Story", "coin", true, new OrPredicate(new IsInStorylet(336171), new IsInStorylet(322179)), 3),
@@ -62,6 +67,7 @@ const QUALTS = [
     new TopQuality("Cover Identity: Witnesses", "Story", "whispered_secret", true, CABINET_NOIR_BACK_ROOM, 6, "Witnesses"),
     new TopQuality("Cover Identity: Credentials", "Story", "envelope", true, CABINET_NOIR_BACK_ROOM, 6, "Credentials"),
     new TopQuality("Cover Identity: Backstory", "Story", "maskpurple", true, CABINET_NOIR_BACK_ROOM, undefined, "Backstory"),
+    new TopQuality("Fragments of Infernal Affairs", "Progress", "paperstack", true, SUNKEN_EMBASSY, 600),
 ]
 
 export class TopQualities implements IMutationAware, IStateAware {
