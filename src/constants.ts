@@ -130,7 +130,7 @@ const SETTINGS_SCHEMA: SettingsSchema = [
                 default: true,
             },
             top_bar_qualities: {
-                description: "Show context-dependent qualities above branches.",
+                description: "Show progress qualities at the top while in supported grinds.",
                 default: true,
            },
         },
